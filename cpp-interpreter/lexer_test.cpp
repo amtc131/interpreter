@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 #include <lexer.cpp>
+#include <stdio.h>
+#include <string.h>
+
 
 struct TestData{
   TokenType expectedType;
@@ -25,11 +28,10 @@ void testNextToken(){
   };
   
   Lexer l; 
-
-  struct Lexer lx =l.newLexer(input);
+  struct Lexer lx = l.newLexer(input);
   for(std::vector<TestData>::iterator it = test.begin(); it != test.end(); ++it){
     TestData element = *it;
-    struct Token tok = lx.nextToken();
+    Token tok = lx.nextToken();
     if(tok.type.compare(element.expectedType) != 0){
       std::cout << "test - tokenType wrong. expected = " << element.expectedType << ", got= " << tok.type << "\n";
     } 

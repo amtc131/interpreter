@@ -1,17 +1,21 @@
 #include <token.h>
 #include <iostream> 
 #include <string>
+#include <stdlib.h>
+#include <stdio.h>
+
 Token newToken(TokenType tokenType, char ch);
 void readChar();
 Token nextToken();
 
 struct Lexer{
   std::string input;
-  int position;
-  int readPosition;
-  char ch;
+  int position = 0;
+  int readPosition = 0;
+  char ch = '\0';
 
   void readChar(){
+    //std::cout << "readChar  ch: " << ch << " readPosition: " << readPosition << "  input: " << input << " position: " << position << std::endl;
     if (readPosition >= input.length()){
       ch = 0;
     }else {
@@ -23,7 +27,6 @@ struct Lexer{
 
   Token nextToken(){
     struct Token tok;
-//    std::cout << "----" << ch << std::endl;
     switch (ch) {
       case '=':
         tok = newToken(ASSIGN, ch);
@@ -54,10 +57,10 @@ struct Lexer{
         tok.type = EO_F;
         break;
     }
-    std::cout << "-----" << tok.literal << "\n";
     readChar();
     return tok;
   }
+
   Token newToken(TokenType tokenType, char ch){
     struct Token token;
     token.type = tokenType;
