@@ -2,6 +2,9 @@
 #include <iostream> 
 #include <string>
 
+bool isLetter(char ch);
+bool isDigit(char ch);
+
 class Lexer {
 public:
   std::string input;
@@ -13,6 +16,9 @@ private:
   int readPosition = 0;
   void readChar();
   Token newToken(TokenType tokenType, char ch);
+  std::string readIdentifier();
+  void skipWhitespace();
+  std::string readNumber();
 }; 
 
 

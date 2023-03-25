@@ -9,6 +9,7 @@ using namespace std;
 
 Token Lexer::nextToken(){
   struct Token tok;
+  skipWhitespace();
   switch (ch) {
     case '=':
       tok = newToken(ASSIGN, ch);
@@ -38,6 +39,18 @@ Token Lexer::nextToken(){
       tok.literal = "";
       tok.type = EO_F;
       break;
+    default:
+      if (isLetter(ch)){
+        tok.literal = readIdentifier();
+        tok.type = lookupIdent(tok.literal);
+        return tok;
+      }else if(isDigit(ch)){
+        tok.type = INT;
+        tok.literal = readNumber();
+        return tok;
+      }else{
+        tok = newToken(ILLEGAL, ch);
+      }
   }
   readChar();
   return tok;
@@ -68,3 +81,32 @@ Token Lexer::newToken(TokenType tokenType, char ch){
   return token;
 }
 
+std::string Lexer::readIdentifier(){
+  int pt = position;
+  while(isLetter(ch)){
+    readChar();
+  }
+  return input.substr(pt, position - pt);
+}
+
+bool isLetter(char ch){
+  return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
+}
+
+void Lexer::skipWhitespace(){
+  while (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r'){
+    readChar();
+  }
+}
+
+std::string Lexer::readNumber(){
+  int p = position;
+  while(isDigit(ch)){
+    readChar();
+  }
+  return input.substr(p, position - p);
+}
+
+bool isDigit(char ch){
+  return '0' <= ch && ch <= '9';
+}
