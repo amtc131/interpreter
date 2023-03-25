@@ -2,10 +2,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <lexer.cpp>
+#include <lexer.hpp>
 #include <stdio.h>
 #include <string.h>
 
+using namespace std;
 
 struct TestData{
   TokenType expectedType;
@@ -28,7 +29,7 @@ void testNextToken(){
   };
   
   Lexer l; 
-  struct Lexer lx = l.newLexer(input);
+  Lexer lx = l.newLexer(input);
   for(std::vector<TestData>::iterator it = test.begin(); it != test.end(); ++it){
     TestData element = *it;
     Token tok = lx.nextToken();

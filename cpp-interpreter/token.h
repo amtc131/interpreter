@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+
 #define ILLEGAL "ILLEGAL"
 #define EO_F "EOF"
 #define IDENT "IDENT"
@@ -26,6 +27,4 @@ struct Token {
 };
 
 #endif 
-
-
 
